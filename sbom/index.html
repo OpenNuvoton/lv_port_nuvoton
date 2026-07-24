@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCA Report - lv_port_nuvoton</title>
+<style>
+  :root {
+    --color-bg: #f0f2f5;
+    --color-card: #ffffff;
+    --color-border: #e0e0e0;
+    --color-text: #1a1a2e;
+    --color-muted: #6c757d;
+    --color-accent: #4caf50;
+    --color-critical: #dc3545;
+    --color-high: #fd7e14;
+    --color-medium: #ffc107;
+    --color-low: #28a745;
+    --color-negligible: #17a2b8;
+    --color-unknown: #6c757d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding: 0;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 2rem 2rem 1.5rem;
+  }
+  .header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+  .header .subtitle { color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-top: 0.25rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 2rem 2rem; }
+  h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 0.75rem;
+    color: #1a1a2e;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.15rem;
+    background: var(--color-accent);
+    border-radius: 2px;
+  }
+  .card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  .summary-item {
+    text-align: center;
+    padding: 0.5rem;
+  }
+  .summary-item .label {
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .summary-item .value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: block;
+    margin-top: 0.15rem;
+  }
+  .severity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.6rem;
+  }
+  .severity-card {
+    text-align: center;
+    padding: 0.6rem 0.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  .severity-card.critical { background: #f8d7da; color: var(--color-critical); }
+  .severity-card.high { background: #ffe5cc; color: #c35a00; }
+  .severity-card.medium { background: #fff3cd; color: #856404; }
+  .severity-card.low { background: #d4edda; color: #155724; }
+  .severity-card.negligible { background: #d1ecf1; color: #0c5460; }
+  .severity-card.unknown { background: #e2e3e5; color: #383d41; }
+  .severity-card .count { font-size: 1.5rem; display: block; line-height: 1.2; }
+  .status-pass { color: #155724; font-weight: 700; }
+  .status-fail { color: var(--color-critical); font-weight: 700; }
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.82rem;
+  }
+  th, td {
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+  th {
+    background: #f5f6f8;
+    font-weight: 600;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-muted);
+  }
+  th:first-child { border-radius: 6px 0 0 0; }
+  th:last-child { border-radius: 0 6px 0 0; }
+  tr:hover { background: #f8f9fb; }
+  code {
+    background: #eef1f5;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    word-break: break-all;
+  }
+  .badge {
+    padding: 0.2rem 0.55rem;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 1.5rem;
+    text-align: center;
+  }
+  .badge-danger { background: #f8d7da; color: var(--color-critical); }
+  .badge-ok { background: #d4edda; color: #155724; }
+  .severity {
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .severity-critical { background: #f8d7da; color: var(--color-critical); }
+  .severity-high { background: #ffe5cc; color: #c35a00; }
+  .severity-medium { background: #fff3cd; color: #856404; }
+  .severity-low { background: #d4edda; color: #155724; }
+  .severity-negligible { background: #d1ecf1; color: #0c5460; }
+  .severity-unknown { background: #e2e3e5; color: #383d41; }
+  .no-vulns { text-align: center; color: #155724; font-weight: 600; padding: 2rem; }
+  .footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+  }
+  @media (max-width: 768px) {
+    .header { padding: 1.5rem 1rem; }
+    .container { padding: 1rem; }
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .severity-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div style="max-width:1200px;margin:0 auto;">
+    <h1>Software Composition Analysis (SCA) Report</h1>
+    <p class="subtitle">lv_port_nuvoton</p>
+  </div>
+</div>
+<div class="container">
+
+  <div class="card">
+    <div class="summary-grid">
+      <div class="summary-item"><span class="label">Supplier</span><span class="value">Nuvoton Technology</span></div>
+      <div class="summary-item"><span class="label">Generated Date</span><span class="value">2026-07-24</span></div>
+      <div class="summary-item"><span class="label">Components</span><span class="value">21</span></div>
+      <div class="summary-item"><span class="label">Status</span><span class="value status-fail">Action Required</span></div>
+    </div>
+  </div>
+
+  <h2>Security Vulnerability Summary</h2>
+  <div class="card">
+    <div class="severity-grid">
+      <div class="severity-card critical"><span class="count">0</span>Critical</div>
+      <div class="severity-card high"><span class="count">3</span>High</div>
+      <div class="severity-card medium"><span class="count">2</span>Medium</div>
+      <div class="severity-card low"><span class="count">0</span>Low</div>
+      <div class="severity-card negligible"><span class="count">0</span>Negligible</div>
+      <div class="severity-card unknown"><span class="count">0</span>Unknown</div>
+    </div>
+  </div>
+
+  <h2>Component Composition</h2>
+  <div class="card" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Version</th><th>Type</th><th>License</th><th>Vulns</th><th>Package URL (purl)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>thirdparty/FatFs</strong></td>
+          <td><code>0.16</code></td>
+          <td>library</td>
+          <td>FatFs License</td>
+          <td><span class="badge badge-danger">5</span></td>
+          <td><code>pkg:generic/FatFs@0.16</code></td>
+        </tr>
+        <tr>
+          <td><strong>thirdparty/avilib</strong></td>
+          <td><code>1.0</code></td>
+          <td>library</td>
+          <td>GPL-2.0-or-later</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:generic/avilib@1.0</code></td>
+        </tr>
+        <tr>
+          <td><strong>thirdparty/FreeRTOS</strong></td>
+          <td><code>11.3.0</code></td>
+          <td>library</td>
+          <td>MIT</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/FreeRTOS/FreeRTOS-Kernel@11.3.0</code></td>
+        </tr>
+        <tr>
+          <td><strong>thirdparty/arm2d</strong></td>
+          <td><code>1.2.5</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/ARM-software/Arm-2D@v1.2.5</code></td>
+        </tr>
+        <tr>
+          <td><strong>lvgl</strong></td>
+          <td><code>9.5.0</code></td>
+          <td>library</td>
+          <td>MIT</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/lvgl/lvgl@v9.5.0</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m031</strong></td>
+          <td><code>3.09.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M031BSP@V3.09.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m2354</strong></td>
+          <td><code>3.00.006</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M2354BSP@v3.00.006</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m2l31</strong></td>
+          <td><code>3.02.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M2L31BSP@V3.02.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m3331</strong></td>
+          <td><code>3.00.002</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/m3331bsp@v3.00.002</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m3351</strong></td>
+          <td><code>3.00.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M3351BSP@V3.00.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m460</strong></td>
+          <td><code>3.00.005</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/m460bsp@v3.00.005</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m480</strong></td>
+          <td><code>3.07.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M480BSP@V3.07.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m5531</strong></td>
+          <td><code>3.01.004</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M5531BSP@V3.01.004</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/m55m1</strong></td>
+          <td><code>3.01.004</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/M55M1BSP@V3.01.004</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/ma35d1</strong></td>
+          <td><code>1.4</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/MA35D1_NonOS_BSP@v1.4</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/ma35h0</strong></td>
+          <td><code>1.4</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/MA35H0_NonOS_BSP@v1.4</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/n9h20</strong></td>
+          <td><code>1.03.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/N9H20_NonOS_BSP@V1.03.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/n9h26</strong></td>
+          <td><code>1.02.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/N9H26_NonOS_BSP@V1.02.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/n9h30</strong></td>
+          <td><code>1.08.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/N9H30_NonOS@v1.08.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/n9h31</strong></td>
+          <td><code>1.01.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/N9H31_NonOS@v1.01.000</code></td>
+        </tr>
+        <tr>
+          <td><strong>bsp/nuc980</strong></td>
+          <td><code>1.07.000</code></td>
+          <td>library</td>
+          <td>Apache-2.0</td>
+          <td><span class="badge badge-ok">0</span></td>
+          <td><code>pkg:github/OpenNuvoton/NUC980_NonOS_BSP@v1.07.000</code></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Detailed Vulnerabilities</h2>
+  <div class="card" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr><th>Severity</th><th>ID</th><th>Component</th><th>Version</th><th>Fix Status</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="severity severity-high">High</span></td>
+          <td style="white-space:nowrap"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6687" target="_blank"><code>CVE-2026-6687</code></a></td>
+          <td><strong>thirdparty/FatFs</strong></td>
+          <td><code>0.16</code></td>
+          <td><code>unknown</code></td>
+          <td>FatFs R0.16 and earlier contains a stack overflow bug in f_getlabel() because exFAT label length (XDIR_NumLabel) is trusted without enforcing spec maximums. This maps to CWE-121 (Stack-based Buffer Ov</td>
+        </tr>
+        <tr>
+          <td><span class="severity severity-high">High</span></td>
+          <td style="white-space:nowrap"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6682" target="_blank"><code>CVE-2026-6682</code></a></td>
+          <td><strong>thirdparty/FatFs</strong></td>
+          <td><code>0.16</code></td>
+          <td><code>unknown</code></td>
+          <td>In FatFS R0.16 and earlier contains a FAT32 integer overflow bug in mount_volume() where fasize *= fs->n_fats can wrap, leading to attacker-controlled file-size metadata and unsafe read lengths in dow</td>
+        </tr>
+        <tr>
+          <td><span class="severity severity-high">High</span></td>
+          <td style="white-space:nowrap"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6688" target="_blank"><code>CVE-2026-6688</code></a></td>
+          <td><strong>thirdparty/FatFs</strong></td>
+          <td><code>0.16</code></td>
+          <td><code>unknown</code></td>
+          <td>FatFs R0.16 and earlier contains a downstream-caller vulnerability pattern associated with FatFs long filename handling. With LFN enabled, fno.fname can be up to 255 characters; many callers copy it i</td>
+        </tr>
+        <tr>
+          <td><span class="severity severity-medium">Medium</span></td>
+          <td style="white-space:nowrap"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6683" target="_blank"><code>CVE-2026-6683</code></a></td>
+          <td><strong>thirdparty/FatFs</strong></td>
+          <td><code>0.16</code></td>
+          <td><code>unknown</code></td>
+          <td>FatFs R0.16 and earlier contains a divide-by-zero in exFAT sync logic bug when crafted metadata causes n_fatent - 2 to be zero during write/sync operations. This maps to CWE-369 (Divide By Zero). Esti</td>
+        </tr>
+        <tr>
+          <td><span class="severity severity-medium">Medium</span></td>
+          <td style="white-space:nowrap"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-6686" target="_blank"><code>CVE-2026-6686</code></a></td>
+          <td><strong>thirdparty/FatFs</strong></td>
+          <td><code>0.16</code></td>
+          <td><code>unknown</code></td>
+          <td>FatFs R0.16 and earlier contains an uninitialized cluster exposure when f_lseek() extends files beyond EOF without zero-filling newly allocated clusters. This maps to CWE-908 (Use of Uninitialized Res</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p><a href="sbom.json" style="color:var(--color-accent);text-decoration:none;">Download SBOM (sbom.json)</a></p>
+    <p>Generated by lv_port_nuvoton SBOM/SCA pipeline on 2026-07-24</p>
+  </div>
+</div>
+</body>
+</html>

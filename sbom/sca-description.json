@@ -1,0 +1,231 @@
+{
+  "project_name": "lv_port_nuvoton",
+  "generated_date": "2026-07-24",
+  "supplier": "Nuvoton Technology",
+  "total_components": 21,
+  "vulnerability_summary": {
+    "Critical": 0,
+    "High": 3,
+    "Medium": 2,
+    "Low": 0,
+    "Negligible": 0,
+    "Unknown": 0
+  },
+  "components": [
+    {
+      "name": "thirdparty/FatFs",
+      "version": "0.16",
+      "type": "library",
+      "purl": "pkg:generic/FatFs@0.16",
+      "license": "FatFs License",
+      "vulnerabilities_found": 5
+    },
+    {
+      "name": "thirdparty/avilib",
+      "version": "1.0",
+      "type": "library",
+      "purl": "pkg:generic/avilib@1.0",
+      "license": "GPL-2.0-or-later",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "thirdparty/FreeRTOS",
+      "version": "11.3.0",
+      "type": "library",
+      "purl": "pkg:github/FreeRTOS/FreeRTOS-Kernel@11.3.0",
+      "license": "MIT",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "thirdparty/arm2d",
+      "version": "1.2.5",
+      "type": "library",
+      "purl": "pkg:github/ARM-software/Arm-2D@v1.2.5",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "lvgl",
+      "version": "9.5.0",
+      "type": "library",
+      "purl": "pkg:github/lvgl/lvgl@v9.5.0",
+      "license": "MIT",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m031",
+      "version": "3.09.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M031BSP@V3.09.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m2354",
+      "version": "3.00.006",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M2354BSP@v3.00.006",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m2l31",
+      "version": "3.02.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M2L31BSP@V3.02.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m3331",
+      "version": "3.00.002",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/m3331bsp@v3.00.002",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m3351",
+      "version": "3.00.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M3351BSP@V3.00.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m460",
+      "version": "3.00.005",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/m460bsp@v3.00.005",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m480",
+      "version": "3.07.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M480BSP@V3.07.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m5531",
+      "version": "3.01.004",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M5531BSP@V3.01.004",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/m55m1",
+      "version": "3.01.004",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/M55M1BSP@V3.01.004",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/ma35d1",
+      "version": "1.4",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/MA35D1_NonOS_BSP@v1.4",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/ma35h0",
+      "version": "1.4",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/MA35H0_NonOS_BSP@v1.4",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/n9h20",
+      "version": "1.03.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/N9H20_NonOS_BSP@V1.03.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/n9h26",
+      "version": "1.02.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/N9H26_NonOS_BSP@V1.02.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/n9h30",
+      "version": "1.08.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/N9H30_NonOS@v1.08.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/n9h31",
+      "version": "1.01.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/N9H31_NonOS@v1.01.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    },
+    {
+      "name": "bsp/nuc980",
+      "version": "1.07.000",
+      "type": "library",
+      "purl": "pkg:github/OpenNuvoton/NUC980_NonOS_BSP@v1.07.000",
+      "license": "Apache-2.0",
+      "vulnerabilities_found": 0
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "vuln_id": "CVE-2026-6687",
+      "severity": "High",
+      "package_name": "thirdparty/FatFs",
+      "package_version": "0.16",
+      "purl": "pkg:generic/FatFs@0.16",
+      "description": "FatFs R0.16 and earlier contains a stack overflow bug in f_getlabel() because exFAT label length (XDIR_NumLabel) is trusted without enforcing spec maximums. This maps to CWE-121 (Stack-based Buffer Overflow). Estimated CVSS v3.1 vector: CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H (7.6, High). The estimated CISA SSVC vectors are Exploitation: PoC, Technical Impact: Total.",
+      "fix_state": "unknown"
+    },
+    {
+      "vuln_id": "CVE-2026-6682",
+      "severity": "High",
+      "package_name": "thirdparty/FatFs",
+      "package_version": "0.16",
+      "purl": "pkg:generic/FatFs@0.16",
+      "description": "In FatFS R0.16 and earlier contains a FAT32 integer overflow bug in mount_volume() where fasize *= fs->n_fats can wrap, leading to attacker-controlled file-size metadata and unsafe read lengths in downstream callers. This maps to CWE-190 (Integer Overflow or Wraparound). Estimated CVSS v3.1 vector: CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H (7.6, High). Remote delivery is also possible in OTA/update pipelines. The estimated CISA SSVC vectors are Exploitation: PoC, Technical Impact: Total.",
+      "fix_state": "unknown"
+    },
+    {
+      "vuln_id": "CVE-2026-6688",
+      "severity": "High",
+      "package_name": "thirdparty/FatFs",
+      "package_version": "0.16",
+      "purl": "pkg:generic/FatFs@0.16",
+      "description": "FatFs R0.16 and earlier contains a downstream-caller vulnerability pattern associated with FatFs long filename handling. With LFN enabled, fno.fname can be up to 255 characters; many callers copy it into short fixed buffers without bounds checks, causing overflow. This maps to CWE-120 (Buffer Copy without Checking Size of Input). Estimated CVSS v3.1 vector: CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H (7.6, High). The estimated CISA SSVC vectors are Exploitation: PoC, Technical Impact: Total.",
+      "fix_state": "unknown"
+    },
+    {
+      "vuln_id": "CVE-2026-6683",
+      "severity": "Medium",
+      "package_name": "thirdparty/FatFs",
+      "package_version": "0.16",
+      "purl": "pkg:generic/FatFs@0.16",
+      "description": "FatFs R0.16 and earlier contains a divide-by-zero in exFAT sync logic bug when crafted metadata causes n_fatent - 2 to be zero during write/sync operations. This maps to CWE-369 (Divide By Zero). Estimated CVSS v3.1 vector: CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (4.6, Medium). Network-delivered update media can make this remote in some pipelines. The estimated CISA SSVC vectors are Exploitation: PoC, Technical Impact: Partial.",
+      "fix_state": "unknown"
+    },
+    {
+      "vuln_id": "CVE-2026-6686",
+      "severity": "Medium",
+      "package_name": "thirdparty/FatFs",
+      "package_version": "0.16",
+      "purl": "pkg:generic/FatFs@0.16",
+      "description": "FatFs R0.16 and earlier contains an uninitialized cluster exposure when f_lseek() extends files beyond EOF without zero-filling newly allocated clusters. This maps to CWE-908 (Use of Uninitialized Resource). Estimated CVSS v3.1 vector: CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N (4.6, Medium). The estimated CISA SSVC vectors are Exploitation: PoC, Technical Impact: Partial.",
+      "fix_state": "unknown"
+    }
+  ]
+}
